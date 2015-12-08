@@ -8,6 +8,10 @@
       $scope.syncedValue = $firebaseObject(fbutil.ref('syncedValue'));
       $scope.user = user;
       $scope.FBURL = FBURL;
+
+      $scope.getNumber = function(n) {
+        return new Array(n);
+      };
     }
   ]);
 

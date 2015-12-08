@@ -4,6 +4,16 @@ body {
   margin: 10px;
 }
 
+.img-preview {
+  margin: 10px;
+  display: inline-block;
+}
+
+.center {
+  margin: 0 auto;
+  width: 10%;
+}
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
