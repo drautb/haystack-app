@@ -1,0 +1,9 @@
+{
+  "firebase": "haystack-index-dev",
+  "public": "app",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

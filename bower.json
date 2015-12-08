@@ -1,0 +1,16 @@
+{
+  "name": "haystack-app",
+  "description": "A web frontend for haystack",
+  "version": "1.0.0",
+  "homepage": "https://github.com/drautb/haystack-app",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.3.8",
+    "angular-route": "~1.3.8",
+    "angular-loader": "~1.3.8",
+    "html5-boilerplate": "~4.3.0",
+    "firebase": "2.2.2",
+    "angularfire": "~1.0.0"
+  }
+}
