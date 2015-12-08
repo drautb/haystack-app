@@ -9,6 +9,10 @@ body {
   display: inline-block;
 }
 
+.datepicker-container {
+  position: relative;
+}
+
 .center {
   margin: 0 auto;
   width: 10%;

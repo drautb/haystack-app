@@ -7,11 +7,61 @@
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div id="sidebar" class="col-md-3 sidebar">
+            <div class="form-group">
+                <label>Search by</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="searchBy" value="taken" checked="true">Date Taken
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="searchBy" value="indexed">Date Indexed
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="starttimepicker">Start Time</label>
+                <div class="datepicker-container">
+                    <input type="text" class="form-control" id="startTimePicker" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endtimepicker">End Time</label>
+                <div class="datepicker-container">
+                    <input type="text" class="form-control" id="endTimePicker" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Include</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="pictures" checked="true">Pictures
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="videos" checked="true">Videos
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Starred</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="starred">Only show starred media?
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Search by tag</label>
+                <input type="text" class="form-control" id="searchByTags" data-provide="typeahead" autocomplete="off" />
+            </div>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-md-9 col-md-offset-3 main">
             <div class="row">
-                <div ng-repeat="n in getNumber(100) track by $index" class="img-preview">
+                <div ng-repeat="n in getNumber(50) track by $index" class="img-preview">
                     <img src="img/placeholder.png" />
                 </div>
             </div>
