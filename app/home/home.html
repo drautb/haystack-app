@@ -23,12 +23,12 @@
                         <label>Search by</label>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="searchBy" value="taken" checked="true">Date Taken
+                                <input type="radio" name="searchBy" value="taken" ng-model="searchBy">Date Taken
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="searchBy" value="indexed">Date Indexed
+                                <input type="radio" name="searchBy" value="indexed" ng-model="searchBy">Date Indexed
                             </label>
                         </div>
                     </div>
@@ -36,7 +36,11 @@
                         <div class="input-group">
                             <span class="input-group-addon">Start</span>
                             <div class="datepicker-container">
-                                <input type="text" class="form-control" id="startTimePicker" />
+                                <input type="text"
+                                       class="form-control"
+                                       datetimepicker
+                                       datetimepicker-options="{{ datetimePickerOptions }}"
+                                       ng-model="startTime" />
                             </div>
                         </div>
                     </div>
@@ -44,7 +48,11 @@
                         <div class="input-group">
                             <span class="input-group-addon">End</span>
                             <div class="datepicker-container">
-                                <input type="text" class="form-control" id="endTimePicker" />
+                                 <input type="text"
+                                       class="form-control"
+                                       datetimepicker
+                                       datetimepicker-options="{{ datetimePickerOptions }}"
+                                       ng-model="endTime" />
                             </div>
                         </div>
                     </div>
@@ -52,12 +60,12 @@
                         <label>Include</label>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="pictures" checked="true">Pictures
+                                <input type="checkbox" value="pictures" ng-model="showPictures">Pictures
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="videos" checked="true">Videos
+                                <input type="checkbox" value="videos" ng-model="showVideos">Videos
                             </label>
                         </div>
                     </div>
@@ -75,7 +83,7 @@
                             <input type="text" class="form-control input" id="searchByTags" />
                         </div>
                     </div>
-                    <button class="btn btn-primary" data-dismiss="modal">Search</button>
+                    <button class="btn btn-primary" data-dismiss="modal" ng-click="search()">Search</button>
                 </div>
             </div>
             <!-- modal-content -->
@@ -84,17 +92,18 @@
     <div class="row">
         <div class="col-md-12 main">
             <div class="row">
-                <div ng-repeat="n in getNumber(50) track by $index" class="img-preview">
-                    <img src="img/placeholder.png" />
+                <div ng-repeat="m in media | filter:displayFilter" class="img-preview">
+                    <img src="img/placeholder.png" ng-if="m.type == 'JPG'" />
+                    <img src="img/placeholder-video.jpg" ng-if="m.type == 'MP4'" />
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="center">
                     <div class="img-preview">
                         <img src="img/loading.gif">
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

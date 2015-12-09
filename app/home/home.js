@@ -1,76 +1,85 @@
-(function(angular) {
-  "use strict";
+"use strict";
 
-  var app = angular.module('haystack.home', ['firebase.auth', 'firebase', 'firebase.utils', 'ngRoute']);
+var app = angular.module('haystack');
 
-  app.controller('HomeCtrl', ['$scope', 'fbutil', 'user', '$firebaseObject', 'FBURL',
-    function($scope, fbutil, user, $firebaseObject, FBURL) {
-      $scope.syncedValue = $firebaseObject(fbutil.ref('syncedValue'));
-      $scope.user = user;
-      $scope.FBURL = FBURL;
+app.controller('HomeController', ['$scope', 'IndexService', 'MOMENT_FMT',
+  function($scope, IndexService, MOMENT_FMT) {
 
-      $scope.getNumber = function(n) {
-        return new Array(n);
-      };
+    $scope.displayFilter = function(value, index, array) {
+      if ($scope.imageTypes.indexOf(value.type) > -1) {
+        return $scope.showPictures;
+      }
 
-      $('#startTimePicker').datetimepicker();
-      $('#startTimePicker').data('DateTimePicker').date(moment());
+      if ($scope.videoTypes.indexOf(value.type) > -1) {
+        return $scope.showVideos;
+      }
+    };
 
-      $('#endTimePicker').datetimepicker();
-      $('#endTimePicker').data('DateTimePicker').date(moment().subtract(90, 'days'));
+    $scope.search = function() {
+      var startTimeSeconds = moment($scope.startTime, MOMENT_FMT).unix(),
+        endTimeSeconds = moment($scope.endTime, MOMENT_FMT).unix();
 
-      var engine = new Bloodhound({
-        local: [{
-          value: 'ben'
-        }, {
-          value: 'brittney'
-        }, {
-          value: 'abby'
-        }, {
-          value: 'baby'
-        }, {
-          value: 'disneyland'
-        }, {
-          value: 'vacation'
-        }, {
-          value: 'cabin'
-        }, {
-          value: 'boating'
-        }, {
-          value: 'zoo'
-        }],
-        datumTokenizer: function(d) {
-          return Bloodhound.tokenizers.whitespace(d.value);
-        },
-        queryTokenizer: Bloodhound.tokenizers.whitespace
-      });
+      $scope.media = IndexService.query($scope.searchBy, startTimeSeconds, endTimeSeconds);
+    };
 
-      engine.initialize();
+    /**
+     * Component Initialization for date pickers and token fields
+     */
+    var engine = new Bloodhound({
+      local: [{
+        value: 'ben'
+      }, {
+        value: 'brittney'
+      }, {
+        value: 'abby'
+      }, {
+        value: 'baby'
+      }, {
+        value: 'disneyland'
+      }, {
+        value: 'vacation'
+      }, {
+        value: 'cabin'
+      }, {
+        value: 'boating'
+      }, {
+        value: 'zoo'
+      }],
+      datumTokenizer: function(d) {
+        return Bloodhound.tokenizers.whitespace(d.value);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+    });
 
-      $('#searchByTags').tokenfield({
-        typeahead: [null, {
-          source: engine.ttAdapter(),
-          displayKey: 'value'
-        }]
-      });
-    }
-  ]);
+    engine.initialize();
 
+    $('#searchByTags').tokenfield({
+      typeahead: [null, {
+        source: engine.ttAdapter(),
+        displayKey: 'value'
+      }]
+    });
 
-  app.config(['$routeProvider',
-    function($routeProvider) {
-      $routeProvider.when('/home', {
-        templateUrl: 'home/home.html',
-        controller: 'HomeCtrl',
-        resolve: {
-          user: ['Auth',
-            function(Auth) {
-              return Auth.$waitForAuth();
-            }
-          ]
-        }
-      });
-    }
-  ]);
+    /**
+     * Initialization
+     */
+    $scope.imageTypes = ['JPG', 'JPEG'];
+    $scope.videoTypes = ['MP4'];
 
-})(angular);
+    $scope.searchBy = 'taken';
+
+    $scope.datetimePickerOptions = {
+      format: MOMENT_FMT
+    };
+    $scope.startTime = moment().subtract(90, 'days').format(MOMENT_FMT);
+    $scope.endTime = moment().format(MOMENT_FMT);
+
+    $scope.showPictures = true;
+    $scope.showVideos = true;
+
+    /**
+     * Go
+     */
+    $scope.search();
+  }
+]);
