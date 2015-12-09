@@ -42,12 +42,12 @@
 .tt-suggestion:hover {
   cursor: pointer;1
   color: #fff;
-  background-color: #eb9316;
+  background-color: #337ab7;
 }
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #eb9316;
+  background-color: #337ab7;
 
 }
 
