@@ -1,7 +1,7 @@
 {
   "firebase": "haystack-index-dev",
   "public": "app",
-  "rules": "security-rules.bolt",
+  "rules": "security-rules.json",
   "ignore": [
     "firebase.json",
     "**/.*",

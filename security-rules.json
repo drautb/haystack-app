@@ -1,0 +1,38 @@
+{
+  "rules": {
+    "media": {
+      ".indexOn": [
+        "dateTaken",
+        "dateIndexed",
+        "hash"
+      ],
+      "$mediaid": {
+        ".validate": "newData.hasChildren(['pathToMedia', 'pathToThumbnail', 'dateTaken', 'dateIndexed', 'sourceDeviceId', 'hash', 'type'])",
+        "pathToMedia": {
+          ".validate": "newData.isString()"
+        },
+        "pathToThumbnail": {
+          ".validate": "newData.isString()"
+        },
+        "dateTaken": {
+          ".validate": "newData.isNumber()"
+        },
+        "dateIndexed": {
+          ".validate": "newData.isNumber()"
+        },
+        "sourceDeviceId": {
+          ".validate": "newData.isString()"
+        },
+        "hash": {
+          ".validate": "newData.isString() && newData.val().length == 32"
+        },
+        "type": {
+          ".validate": "newData.isString() && (newData.val() == 'JPG' || newData.val() == 'JPEG' || newData.val() == 'MP4')"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      }
+    }
+  }
+}
