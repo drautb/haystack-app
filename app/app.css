@@ -9,7 +9,19 @@ body {
 
 .img-preview {
   margin: 10px;
+  padding: 5px;
+  min-height: 128px;
+  min-width: 128px;
   display: inline-block;
+  text-align: center;
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+.img-preview-helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }
 
 .datepicker-container {
@@ -143,8 +155,8 @@ fieldset {
 }
 
 .modal-header {
-  border-bottom-color: #333;
-  background-color: #333;
+  border-bottom-color: #337ab7;
+  background-color: #337ab7;
   color: #fff;
 }
 

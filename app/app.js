@@ -2,16 +2,20 @@
 
 // Declare app level module which depends on filters, and services
 var app = angular.module('haystack', [
+  'angular-loading-bar',
   'angularMoment',
+  'bootstrapLightbox',
   'datetimepicker',
   'firebase',
-  'ngRoute'
+  'ngRoute',
+  'ui.bootstrap'
 ]);
 
+app.constant('DATE_INDEXED_FIELD', 'dateIndexed');
+app.constant('DATE_TAKEN_FIELD', 'dateTaken');
 app.constant('FIREBASE_URL', 'https://haystack-index-dev.firebaseio.com/media');
 app.constant('MOMENT_FMT', 'ddd, MMM Do YYYY [- ]h:mm a');
-app.constant('DATE_TAKEN_FIELD', 'dateTaken');
-app.constant('DATE_INDEXED_FIELD', 'dateIndexed');
+app.constant('PAGE_SIZE', 500);
 
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -21,6 +25,20 @@ app.config(['$routeProvider',
     });
   }
 ])
+
+app.config(function(LightboxProvider, MOMENT_FMT) {
+  LightboxProvider.getImageUrl = function(media) {
+    return 'http://haystack.local:8000/' + media.pathToMedia;
+  };
+
+  LightboxProvider.isVideo = function(media) {
+    return media.type == 'MP4'
+  }
+
+  LightboxProvider.getImageCaption = function(media) {
+    return moment.unix(media.dateTaken).tz('America/Denver').format(MOMENT_FMT);
+  };
+});
 
 app.run(['$rootScope', '$window',
   function($rootScope, $window) {

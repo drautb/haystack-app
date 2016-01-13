@@ -92,9 +92,11 @@
     <div class="row">
         <div class="col-md-12 main">
             <div class="row">
-                <div ng-repeat="m in media | filter:displayFilter" class="img-preview">
-                    <img src="img/placeholder.png" ng-if="m.type == 'JPG'" />
-                    <img src="img/placeholder-video.jpg" ng-if="m.type == 'MP4'" />
+                <div ng-repeat="(k, v) in media | filter:displayFilter" class="img-preview">
+                    <a ng-click="openLightbox($index)">
+                        <span class="img-preview-helper"></span>
+                        <img src="http://haystack.local:8000/{{v.pathToThumbnail}}" />
+                    </a>
                 </div>
             </div>
             <!-- <div class="row">

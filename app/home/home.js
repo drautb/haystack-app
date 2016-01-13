@@ -2,8 +2,26 @@
 
 var app = angular.module('haystack');
 
-app.controller('HomeController', ['$scope', 'IndexService', 'MOMENT_FMT',
-  function($scope, IndexService, MOMENT_FMT) {
+app.controller('HomeController', [
+  '$firebaseArray',
+  '$scope',
+  'DATE_INDEXED_FIELD',
+  'DATE_TAKEN_FIELD',
+  'FirebaseService',
+  'Lightbox',
+  'MOMENT_FMT',
+  'PAGE_SIZE',
+  function(
+    $firebaseArray,
+    $scope,
+    DATE_INDEXED_FIELD,
+    DATE_TAKEN_FIELD,
+    FirebaseService,
+    Lightbox,
+    MOMENT_FMT,
+    PAGE_SIZE
+  ) {
+    var firebaseRef = FirebaseService.getRef();
 
     $scope.displayFilter = function(value, index, array) {
       if ($scope.imageTypes.indexOf(value.type) > -1) {
@@ -17,9 +35,15 @@ app.controller('HomeController', ['$scope', 'IndexService', 'MOMENT_FMT',
 
     $scope.search = function() {
       var startTimeSeconds = moment($scope.startTime, MOMENT_FMT).unix(),
-        endTimeSeconds = moment($scope.endTime, MOMENT_FMT).unix();
+        endTimeSeconds = moment($scope.endTime, MOMENT_FMT).unix(),
+        orderBy = $scope.searchBy == 'taken' ? DATE_TAKEN_FIELD : DATE_INDEXED_FIELD;
 
-      $scope.media = IndexService.query($scope.searchBy, startTimeSeconds, endTimeSeconds);
+      var queryObj = firebaseRef.orderByChild(orderBy).limitToLast(PAGE_SIZE);
+      $scope.media = $firebaseArray(queryObj);
+    };
+
+    $scope.openLightbox = function(index) {
+      Lightbox.openModal($scope.media, index);
     };
 
     /**
